@@ -1,0 +1,16 @@
+#!/usr/bin/env php
+<?php
+
+$autoload = getcwd() . '/vendor/autoload.php';
+
+require $autoload;
+
+$application = new Symfony\Component\Console\Application();
+
+$application->setName('The CLI for the TRIL stack');
+
+$application->addCommands([
+    new TrilStack\Cli\Console\NewCommand(),
+]);
+
+$application->run();
