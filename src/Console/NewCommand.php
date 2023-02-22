@@ -9,6 +9,8 @@ use Symfony\Component\Console\Input\InputInterface;
 use TrilStack\Cli\Context;
 use TrilStack\Cli\Tasks\ArtisanBreeze;
 use TrilStack\Cli\Tasks\ComposerUpdate;
+use TrilStack\Cli\Tasks\CopyEnv;
+use TrilStack\Cli\Tasks\GenerateKey;
 use TrilStack\Cli\Tasks\NpmBuild;
 use TrilStack\Cli\Tasks\RequireLaravel;
 use TrilStack\Cli\Tasks\RequireBreeze;
@@ -23,6 +25,8 @@ final class NewCommand extends TaskedCommand
         'Run Composer' => ComposerUpdate::class,
         'Run Breeze' => ArtisanBreeze::class,
         'Install assets' => NpmBuild::class,
+        'Copy .env' => CopyEnv::class,
+        'Generate application key' => GenerateKey::class,
     ];
 
     protected function configure(): void
