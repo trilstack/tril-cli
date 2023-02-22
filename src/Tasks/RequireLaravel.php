@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace TrilStack\Cli\Tasks;
 
-use Symfony\Component\Process\Process;
+use TrilStack\Cli\Context;
+use TrilStack\Cli\Process;
 
-final class InstallLaravelTask implements TaskInterface
+final class RequireLaravel implements TaskInterface
 {
     public function execute(Context $context): TaskResult
     {
         $name = $context->get('name');
 
-        $process = new Process(['composer', 'create-project', '--prefer-dist', '--no-install','--no-progress','--no-scripts','--no-scripts','--no-plugins', '--no-interaction', 'laravel/laravel', $name]);
-        $process->run();
+        $process = Process::run("composer create-project --prefer-dist --no-install --no-progress --no-scripts --no-plugins --no-interaction laravel/laravel $name");
 
         $output = $process->getOutput() === '' ? $process->getErrorOutput() : $process->getOutput();
         return new TaskResult($process->isSuccessful(), $output);

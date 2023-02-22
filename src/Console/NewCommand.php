@@ -4,20 +4,25 @@ declare(strict_types=1);
 
 namespace TrilStack\Cli\Console;
 
-use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Output\OutputInterface;
-use TrilStack\Cli\Tasks\Context;
-use TrilStack\Cli\Tasks\InstallLaravelTask;
-use TrilStack\Cli\Tasks\TaskException;
+use TrilStack\Cli\Context;
+use TrilStack\Cli\Tasks\ArtisanBreeze;
+use TrilStack\Cli\Tasks\ComposerUpdate;
+use TrilStack\Cli\Tasks\NpmBuild;
+use TrilStack\Cli\Tasks\RequireLaravel;
+use TrilStack\Cli\Tasks\RequireBreeze;
 
-final class NewCommand extends Command
+final class NewCommand extends TaskedCommand
 {
     protected static $defaultName = 'new';
 
-    private array $tasks = [
-        'Install Laravel' => InstallLaravelTask::class,
+    protected array $tasks = [
+        'Prepare Laravel' => RequireLaravel::class,
+        'Prepare Breeze' => RequireBreeze::class,
+        'Run Composer' => ComposerUpdate::class,
+        'Run Breeze' => ArtisanBreeze::class,
+        'Install assets' => NpmBuild::class,
     ];
 
     protected function configure(): void
@@ -28,26 +33,11 @@ final class NewCommand extends Command
         ;
     }
 
-    public function execute(InputInterface $input, OutputInterface $output): int
+    protected function context(InputInterface $input): Context
     {
-        $render = new Renderer($input->getOption('no-ansi') ?? false);
-
-        $render->welcome();
-
-        $context = Context::create([
+        return Context::create([
+            'projectPath' => getcwd() . '/' . $input->getArgument('name'),
             'name' => $input->getArgument('name'),
         ]);
-
-        foreach ($this->tasks as $title => $task) {
-            $task = new $task();
-            try {
-                $result = $render->task($output, $title, $task, $context);
-            } catch (TaskException $e) {
-                $output->writeln($e->getMessage());
-                return Command::FAILURE;
-            }
-        }
-
-        return Command::SUCCESS;
     }
 }

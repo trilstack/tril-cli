@@ -3,3 +3,6 @@
 /report
 .phpunit.result.cache
 infection.log
+/test
+/foo
+/bar
