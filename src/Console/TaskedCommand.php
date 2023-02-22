@@ -21,7 +21,7 @@ abstract class TaskedCommand extends Command
     /** @todo: replace output writes with fancy renders */
     public function execute(InputInterface $input, OutputInterface $output): int
     {
-        $render = new Renderer($input->getOption('no-ansi') ?? false);
+        $render = new Renderer($input->hasOption('no-ansi') ? $input->getOption('no-ansi') ?? false : false);
 
         $render->welcome();
 

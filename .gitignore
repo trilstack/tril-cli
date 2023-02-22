@@ -6,3 +6,4 @@ infection.log
 /test
 /foo
 /bar
+composer.lock

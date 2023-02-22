@@ -15,7 +15,8 @@
   },
   "require-dev": {
     "phpunit/phpunit": "~9.0",
-    "symplify/easy-coding-standard": "^10.0"
+    "symplify/easy-coding-standard": "^10.0",
+    "symfony/var-dumper": "^6.2"
   },
   "autoload": {
     "psr-4": {
