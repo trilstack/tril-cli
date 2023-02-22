@@ -15,4 +15,9 @@ final class Process
 
         return $process;
     }
+
+    public static function runInProjectDirectory(Context $context): void
+    {
+        chdir($context->getProjectPath());
+    }
 }
