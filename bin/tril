@@ -13,6 +13,7 @@ $application->setName('The CLI for the TRIL stack');
 
 $application->addCommands([
     new TrilStack\Cli\Console\NewCommand(),
+    new TrilStack\Cli\Console\AddNovaCommand(),
 ]);
 
 $application->run();
